@@ -6,7 +6,7 @@ let server: Server;
 let baseUrl: string;
 
 beforeAll(async () => {
-  server = createServer();
+  ({ http: server } = createServer());
   await new Promise<void>((resolve) => server.listen(0, resolve));
   const addr = server.address();
   baseUrl = `http://localhost:${(addr as { port: number }).port}`;

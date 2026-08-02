@@ -5,10 +5,16 @@ import { statusRouter } from "./api/status.js";
 import { createProvidersRouter } from "./api/providers.js";
 import { createModelsRouter } from "./api/models.js";
 import type { AIProvider } from "./providers/types.js";
+import { EventBroadcaster } from "./ws/events.js";
+
+export interface ServerResult {
+  http: HttpServer;
+  broadcaster: EventBroadcaster;
+}
 
 export function createServer(
   providers?: Map<string, AIProvider>
-): HttpServer {
+): ServerResult {
   const app = express();
   app.use(express.json());
 
@@ -19,5 +25,6 @@ export function createServer(
   app.use("/api/models", createModelsRouter(registry));
 
   const srv = http.createServer(app);
-  return srv;
+  const broadcaster = new EventBroadcaster(srv);
+  return { http: srv, broadcaster };
 }
