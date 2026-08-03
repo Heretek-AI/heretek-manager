@@ -50,7 +50,7 @@ export interface GpuSplitParams {
 }
 
 export function gpuSplit(params: GpuSplitParams): GpuSplitResult {
-  const specs = params.gpu_specs ?? (params.gpu_vram_bytes ?? []).map(v => ({ vram_gb: v / (1 << 30) }));
+  const specs: GpuSpec[] = params.gpu_specs ?? (params.gpu_vram_bytes ?? []).map(v => ({ vram_gb: v / (1 << 30) }));
   if (!specs.length) return { assignments: [], total_vram_bytes: 0, total_used_bytes: 0, total_weights_bytes: 0, total_kv_compute_bytes: 0, all_fit: false, split_mode: "layer", main_gpu_index: 0, warnings: [] };
 
   const warns: string[] = [];
