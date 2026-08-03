@@ -5,6 +5,9 @@ import { listCommand } from "./commands/list.js";
 import { useCommand } from "./commands/use.js";
 import { removeCommand } from "./commands/remove.js";
 import { runCommand } from "./commands/run.js";
+import { configCommand } from "./commands/config.js";
+import { doctorCommand } from "./commands/doctor.js";
+import { lemonadeCommand } from "./commands/lemonade.js";
 
 const program = new Command();
 program
@@ -18,12 +21,8 @@ program.addCommand(listCommand);
 program.addCommand(useCommand);
 program.addCommand(removeCommand);
 program.addCommand(runCommand);
-
-// Stub commands
-for (const name of ["config", "doctor", "lemonade"]) {
-  program.command(name).description(`${name} command (coming soon)`).action(() => {
-    console.log(`${name}: not yet implemented`);
-  });
-}
+program.addCommand(configCommand);
+program.addCommand(doctorCommand);
+program.addCommand(lemonadeCommand);
 
 program.parse();
